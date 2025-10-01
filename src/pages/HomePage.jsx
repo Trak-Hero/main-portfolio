@@ -146,24 +146,50 @@ export default function HomePage() {
   return (
     <div className="wrap">
       {/* Top bar with centered HOME */}
-      <header className="topbar">
-        <div className="spacer" />
-        <div className="centerBlock">
-            <div className="name">Purin (Trak) Prateepmanowong</div>
-            <a className="homeBtn" href="/" aria-label="Home">HOME</a>
-        </div>
-        <nav className="filters">
-          {FILTERS.map(f => (
-            <button
-              key={f}
-              onClick={() => setFilter(f)}
-              className={filter === f ? "isActive" : ""}
-            >
-              {f}
-            </button>
-          ))}
-        </nav>
-      </header>
+      <header className="topbar" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      {/* Left side: Back to Space */}
+      <div className="leftControls">
+        <a
+          href="https://trakhero-portfolio.onrender.com/"
+          className="backToSpace"
+          style={{
+            display: "inline-block",
+            padding: "8px 14px",
+            borderRadius: "10px",
+            border: "1px solid rgba(0,0,0,0.2)",
+            background: "#111",
+            color: "#fff",
+            textDecoration: "none",
+            fontSize: "0.9rem",
+            lineHeight: 1,
+            whiteSpace: "nowrap"
+          }}
+        >
+          ← Back to Space
+        </a>
+      </div>
+
+      {/* Center: Name + Home */}
+      <div className="centerBlock">
+        <div className="name">Purin (Trak) Prateepmanowong</div>
+        <a className="homeBtn" href="/" aria-label="Home">HOME</a>
+      </div>
+
+      {/* Right: Filters */}
+      <nav className="filters">
+        {FILTERS.map(f => (
+          <button
+            key={f}
+            onClick={() => setFilter(f)}
+            className={filter === f ? "isActive" : ""}
+          >
+            {f}
+          </button>
+        ))}
+      </nav>
+    </header>
+
+
 
       {/* Subtle line and label like Farmgroup */}
       <div className="contextRow">
