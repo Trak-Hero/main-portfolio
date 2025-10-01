@@ -90,7 +90,7 @@ const PROJECTS = [
     slide: "https://www.canva.com/design/DAG0g5mV1EY/vd2QANQgKOZsw1p-owv7cA/edit?utm_content=DAG0g5mV1EY&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton",
     description:
       "Investigative research into offshore data and structures, compiling and analyzing datasets into actionable insights.",
-    thumb: "/thumbs/Offshore.jpg",
+    thumb: "/thumbs/offshore.jpg",
   },
   {
     id: "doctor-buddy",
