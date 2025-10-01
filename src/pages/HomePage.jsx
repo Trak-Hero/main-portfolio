@@ -25,6 +25,28 @@ const PROJECTS = [
       "Written out of my passion for storytelling and cozy games, I made this website with the Professor's challenge of using only HTML and CSS. It follows a simple slow life journey between a Toad and a Frog (YOU!). This project received the highest recorgnition in the class for its creativity and design.",
     thumb: "/thumbs/toad.jpg",
   },
+
+  /* NEW: Design breakdown tiles */
+  {
+    id: "inventory-design",
+    title: "Design Breakdown — Stock Inventory",
+    tag: "Design",
+    website: "https://readymag.website/u1389774808/5836999/",
+    slide: null,
+    description:
+      "Deep-dive on the UX architecture, flows, and guardrails behind COM7's Stock Inventory system.",
+    thumb: "/thumbs/Stock-design.png",
+  },
+  {
+    id: "dtsa-design",
+    title: "Design Breakdown — Dartmouth Thai Student Association",
+    tag: "Design",
+    website: "https://readymag.website/u1389774808/5843095/",
+    slide: null,
+    description:
+      "Brand and layout study for the Dartmouth Thai Student Association site.",
+    thumb: "/thumbs/tsa-design.png",
+  },
   {
     id: "landing",
     title: "Design Study — Landing Page",
@@ -35,6 +57,7 @@ const PROJECTS = [
       "Study in contrast, rhythm, and hierarchy for a minimal conversion page.",
     thumb: "/thumbs/design-study.jpg",
   },
+
   {
     id: "workmoji",
     title: "Workmoji",
@@ -45,15 +68,49 @@ const PROJECTS = [
       "A gamified task assignment website for corporate teams. It has uses the Central Authentication System I built for COM7 and has role-based access for superadmin, admins, and staff. Tokens and levels are awarded and can be used for late submissions or to be used in the COM7 TOWN game.",
     thumb: "/thumbs/workmoji.jpg",
   },
+
+  /* UPDATED: relink CS “Stock Inventory” to the design breakdown */
   {
     id: "inventory",
     title: "Stock Inventory",
     tag: "Computer Science",
-    website: null,
-    slide: "https://www.canva.com/design/DAGyY282Wx0/i8ns5MBkUfq1zTZ3j1W7Eg/view?utm_content=DAGyY282Wx0&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h3849031a2c",
+    website: "https://readymag.website/u1389774808/5836999/",
+    slide: null,
     description:
-      "An inventory management system for Talent Acquisition team at COM7. As the team needs to track a large number of inventories, I built this system with employee query feature, as well as different option loading based on the type of events.",
+      "An inventory management system for the Talent Acquisition team at COM7. Now linked to the full design breakdown detailing UX decisions and flows.",
     thumb: "/thumbs/inventory.jpg",
+  },
+  /* NEW: Data Science Tiles */
+  {
+    id: "offshore-research",
+    title: "Offshore Research",
+    tag: "Data Science",
+    website:
+      "https://drive.google.com/file/d/1f_kuc50vxivirv4xLIYgp0bKXws8F1fi/view?usp=sharing",
+    slide: "https://www.canva.com/design/DAG0g5mV1EY/vd2QANQgKOZsw1p-owv7cA/edit?utm_content=DAG0g5mV1EY&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton",
+    description:
+      "Investigative research into offshore data and structures, compiling and analyzing datasets into actionable insights.",
+    thumb: "/thumbs/Offshore.jpg",
+  },
+  {
+    id: "doctor-buddy",
+    title: "Doctor Buddy",
+    tag: "Data Science",
+    website: "https://github.com/Trak-Hero/DoctorBuddy",
+    slide: "https://www.canva.com/design/DAGVDtfrJ6w/yxwbDbk8QKVIBKktZlAC7A/edit?utm_content=DAGVDtfrJ6w&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton",
+    description:
+      "A data-driven application for analyzing and enhancing medical support systems, built with a focus on predictive healthcare solutions.",
+    thumb: "/thumbs/doctor.png",
+  },
+  {
+    id: "pm25-bdi",
+    title: "PM2.5 Pollution Data Engineering — BDI",
+    tag: "Data Science",
+    website: "https://github.com/Trak-Hero/NCEP_DATA",
+    slide: "https://www.canva.com/design/DAGNy2iHczs/tfYZGmIUFikthmdkuPgItQ/edit?utm_content=DAGNy2iHczs&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton",
+    description:
+      "Research at the Big Data Institute developing pipelines to process NCEP GFS weather data for improved PM2.5 pollution prediction and health impact analysis.",
+    thumb: "/thumbs/bdi.png",
   },
 ];
 
