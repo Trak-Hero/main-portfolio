@@ -19,7 +19,7 @@ const PROJECTS = [
     id: "toad",
     title: "Toad & I",
     tag: "Computer Science",
-    website: "https://project-music-and-memories-umzm.onrender.com/",
+    website: "https://lab2-quiz-platform-trak-hero.onrender.com",
     slide: null,
     description:
       "Written out of my passion for storytelling and cozy games, I made this website with the Professor's challenge of using only HTML and CSS. It follows a simple slow life journey between a Toad and a Frog (YOU!). This project received the highest recorgnition in the class for its creativity and design.",
