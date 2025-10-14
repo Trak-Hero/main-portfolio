@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useMemo, useState, useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import Tile from "../components/Tile";
 import Modal from "../components/Modal";
@@ -116,6 +116,213 @@ const PROJECTS = [
 
 const FILTERS = ["All", "Computer Science", "Design", "Data Science"];
 
+/* ===================== */
+/* 🎧 Music Radio Corner  */
+/* ===================== */
+const TRACKS = [
+  // Put the audio files in /public/audio/ and update the src paths:
+  { id: "trak1", title: "Childhood Tale", src: "/audio/childhood.mp3" },
+  { id: "trak2", title: "planet b612", src: "/audio/b612.mp3" },
+];
+
+function MusicRadio() {
+  const [open, setOpen] = useState(true);
+  const [muted, setMuted] = useState(false);
+  const [currentId, setCurrentId] = useState(TRACKS[0].id);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef(null);
+
+  const currentTrack = useMemo(
+    () => TRACKS.find(t => t.id === currentId) ?? TRACKS[0],
+    [currentId]
+  );
+
+  useEffect(() => {
+    if (!audioRef.current) return;
+    audioRef.current.muted = muted;
+  }, [muted]);
+
+  // When track changes, load and (if already playing) resume play
+  useEffect(() => {
+    if (!audioRef.current) return;
+    audioRef.current.pause();
+    audioRef.current.load();
+    if (isPlaying) {
+      audioRef.current.play().catch(() => setIsPlaying(false));
+    }
+  }, [currentTrack?.src]); // eslint-disable-line
+
+  const togglePlay = async () => {
+    if (!audioRef.current) return;
+    if (isPlaying) {
+      audioRef.current.pause();
+      setIsPlaying(false);
+    } else {
+      try {
+        await audioRef.current.play();
+        setIsPlaying(true);
+      } catch {
+        // Autoplay will fail without user interaction; user can press again
+        setIsPlaying(false);
+      }
+    }
+  };
+
+  return (
+  <div
+    style={{
+      position: "fixed",
+      right: 16,
+      bottom: 16,
+      zIndex: 9999,
+      fontFamily: "Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial",
+    }}
+  >
+    {/* Persistent audio element (never unmounted) */}
+    <audio ref={audioRef} style={{ display: "none" }}>
+      <source src={currentTrack?.src} type="audio/mpeg" />
+      Your browser does not support the audio element.
+    </audio>
+
+    {/* Minimized pill */}
+    {!open && (
+      <button
+        onClick={() => setOpen(true)}
+        aria-label="Open Music Radio"
+        style={{
+          padding: "10px 14px",
+          borderRadius: 999,
+          border: "1px solid rgba(0,0,0,.15)",
+          background: "#111",
+          color: "#fff",
+          boxShadow: "0 8px 20px rgba(0,0,0,.25)",
+          cursor: "pointer",
+        }}
+      >
+        Music
+      </button>
+    )}
+
+    {/* Expanded panel */}
+    {open && (
+      <div
+        style={{
+          width: 280,
+          padding: 12,
+          borderRadius: 14,
+          background: "rgba(17,17,17,.9)",
+          color: "#fff",
+          border: "1px solid rgba(255,255,255,.12)",
+          boxShadow: "0 12px 28px rgba(0,0,0,.35)",
+          backdropFilter: "blur(8px)",
+        }}
+      >
+        {/* Header */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: 8,
+            marginBottom: 8,
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            <span aria-hidden>🎧</span>
+            <strong>Radio</strong>
+          </div>
+          <div style={{ display: "flex", gap: 6 }}>
+            <button
+              onClick={() => setMuted(m => !m)}
+              title={muted ? "Unmute" : "Mute"}
+              style={iconBtn}
+              aria-label={muted ? "Unmute" : "Mute"}
+            >
+              {muted ? "🔇" : "🔊"}
+            </button>
+            <button
+              onClick={() => setOpen(false)}
+              style={iconBtn}
+              aria-label="Minimize"
+              title="Minimize"
+            >
+              ⤢
+            </button>
+          </div>
+        </div>
+
+        {/* Track picker */}
+        <label
+          htmlFor="trackSelect"
+          style={{ display: "block", fontSize: 12, opacity: 0.8, marginBottom: 4 }}
+        >
+          Select song
+        </label>
+        <select
+          id="trackSelect"
+          value={currentId}
+          onChange={e => setCurrentId(e.target.value)}
+          style={{
+            width: "100%",
+            padding: "8px 10px",
+            borderRadius: 10,
+            background: "#1c1c1c",
+            color: "#fff",
+            border: "1px solid rgba(255,255,255,.12)",
+            marginBottom: 10,
+            cursor: "pointer",
+          }}
+        >
+          {TRACKS.map(t => (
+            <option key={t.id} value={t.id}>
+              {t.title}
+            </option>
+          ))}
+        </select>
+
+        {/* Controls */}
+        <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+          <button
+            onClick={togglePlay}
+            style={{
+              flex: "0 0 auto",
+              padding: "8px 12px",
+              borderRadius: 10,
+              background: isPlaying ? "#2b6" : "#2a2a2a",
+              color: "#fff",
+              border: "1px solid rgba(255,255,255,.12)",
+              cursor: "pointer",
+              fontWeight: 600,
+            }}
+          >
+            {isPlaying ? "Pause" : "Play"}
+          </button>
+          <div style={{ fontSize: 12, opacity: 0.85 }}>
+            {currentTrack?.title}
+          </div>
+        </div>
+
+        {/* Tiny hint */}
+        <div style={{ marginTop: 8, fontSize: 11, opacity: 0.6 }}>
+          Tip: some browsers need a click before audio can start.
+        </div>
+      </div>
+    )}
+  </div>
+);
+}
+
+const iconBtn = {
+  padding: "6px 8px",
+  borderRadius: 8,
+  border: "1px solid rgba(255,255,255,.12)",
+  background: "transparent",
+  color: "#fff",
+  cursor: "pointer",
+};
+
+/* ===================== */
+
 export default function HomePage() {
   // read recruiter filter from ?role=cs|design|ds
   const initialFromURL = useMemo(() => {
@@ -147,49 +354,47 @@ export default function HomePage() {
     <div className="wrap">
       {/* Top bar with centered HOME */}
       <header className="topbar" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-      {/* Left side: Back to Space */}
-      <div className="leftControls">
-        <a
-          href="https://trakhero-portfolio.onrender.com/"
-          className="backToSpace"
-          style={{
-            display: "inline-block",
-            padding: "8px 14px",
-            borderRadius: "10px",
-            border: "1px solid rgba(0,0,0,0.2)",
-            background: "#111",
-            color: "#fff",
-            textDecoration: "none",
-            fontSize: "0.9rem",
-            lineHeight: 1,
-            whiteSpace: "nowrap"
-          }}
-        >
-          ← Back to Space
-        </a>
-      </div>
-
-      {/* Center: Name + Home */}
-      <div className="centerBlock">
-        <div className="name">Purin (Trak) Prateepmanowong</div>
-        <a className="homeBtn" href="/" aria-label="Home">HOME</a>
-      </div>
-
-      {/* Right: Filters */}
-      <nav className="filters">
-        {FILTERS.map(f => (
-          <button
-            key={f}
-            onClick={() => setFilter(f)}
-            className={filter === f ? "isActive" : ""}
+        {/* Left side: Back to Space */}
+        <div className="leftControls">
+          <a
+            href="https://trakhero-portfolio.onrender.com/"
+            className="backToSpace"
+            style={{
+              display: "inline-block",
+              padding: "8px 14px",
+              borderRadius: "10px",
+              border: "1px solid rgba(0,0,0,0.2)",
+              background: "#111",
+              color: "#fff",
+              textDecoration: "none",
+              fontSize: "0.9rem",
+              lineHeight: 1,
+              whiteSpace: "nowrap"
+            }}
           >
-            {f}
-          </button>
-        ))}
-      </nav>
-    </header>
+            ← Back to Space
+          </a>
+        </div>
 
+        {/* Center: Name + Home */}
+        <div className="centerBlock">
+          <div className="name">Purin (Trak) Prateepmanowong</div>
+          <a className="homeBtn" href="/" aria-label="Home">HOME</a>
+        </div>
 
+        {/* Right: Filters */}
+        <nav className="filters">
+          {FILTERS.map(f => (
+            <button
+              key={f}
+              onClick={() => setFilter(f)}
+              className={filter === f ? "isActive" : ""}
+            >
+              {f}
+            </button>
+          ))}
+        </nav>
+      </header>
 
       {/* Subtle line and label like Farmgroup */}
       <div className="contextRow">
@@ -205,6 +410,9 @@ export default function HomePage() {
       </main>
 
       {active && <Modal project={active} onClose={() => setActive(null)} />}
+
+      {/* 🎵 Music Radio Corner */}
+      <MusicRadio />
     </div>
   );
 }
